@@ -7,10 +7,11 @@ import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 import { HelloResolver } from './resolvers/hello';
 import { PostResolver } from './resolvers/post';
+import { UserResolver } from './resolvers/user';
 
 const main = async () => {
   const orm = await MikroORM.init(mikroConfig);
-  await orm.getMigrator().up();
+  await orm.getMigrator().up(); // migration 이 변경 때마다 서버 재가동
   // const post = orm.em.create(Post, {title: '첫번째 게시물'});
   // await orm.em.persistAndFlush(post);
 
@@ -20,7 +21,7 @@ const main = async () => {
   const app = express();
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
-      resolvers: [HelloResolver, PostResolver],
+      resolvers: [HelloResolver, PostResolver, UserResolver],
       validate: false,
     }),
     context: () => ({em:orm.em})
