@@ -1,6 +1,8 @@
 import { Entity, PrimaryKey, Property } from '@mikro-orm/core'
 import { Field, ObjectType } from 'type-graphql';
 
+// ObjectType, Field 를 사용해서 graphql 이 type 로 사용할 수 있도록 변형해준다.
+
 @ObjectType()
 @Entity()
 export class Post {
